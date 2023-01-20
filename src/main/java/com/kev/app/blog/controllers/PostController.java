@@ -46,6 +46,9 @@ public class PostController {
             map.put("status", HttpStatus.NOT_FOUND);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
         }
+        Post response = post.get();
+        response.getUser().setPassword("");
+        response.getUser().setEmail("");
         return ResponseEntity.ok(post.get());
     }
 }
