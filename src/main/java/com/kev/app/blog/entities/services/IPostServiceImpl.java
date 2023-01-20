@@ -18,7 +18,12 @@ public class IPostServiceImpl implements IPostService{
     }
 
     @Override
-    public List<Post> getPost() {
+    public List<Post> getPosts() {
         return repository.findAll();
+    }
+
+    @Override
+    public Post save(Post post) {
+        return repository.save(post);
     }
 }

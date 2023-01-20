@@ -8,5 +8,6 @@ public interface IPostService {
     Post getById(Long id);
     //TODO: get by user id
     //TODO: get comments
-    List<Post> getPost();
+    List<Post> getPosts();
+    Post save(Post post);
 }
