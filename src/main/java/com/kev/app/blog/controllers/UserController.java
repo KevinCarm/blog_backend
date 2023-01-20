@@ -47,8 +47,8 @@ public class UserController {
         User savedUser = service.save(user);
         User response = new User();
         response.setEmail(savedUser.getEmail());
-        response.setUsername(response.getUsername());
+        response.setUsername(savedUser.getUsername());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    
+
 }
