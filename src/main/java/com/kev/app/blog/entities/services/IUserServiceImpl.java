@@ -27,4 +27,9 @@ public class IUserServiceImpl implements IUserService {
         return repository.save(user);
     }
 
+    @Override
+    public User login(LoginRequest loginRequest) {
+        return repository.getByEmail(loginRequest.getEmail());
+    }
+
 }
