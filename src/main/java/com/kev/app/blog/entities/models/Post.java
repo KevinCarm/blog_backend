@@ -14,6 +14,16 @@ public class Post {
     private Date postDate;
     @Column(name = "image_path")
     private String imagePath;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
