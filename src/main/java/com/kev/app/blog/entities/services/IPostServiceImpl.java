@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 public class IPostServiceImpl implements IPostService{
-
     @Autowired
     private IPostRepository repository;
+
     @Override
     public Post getById(Long id) {
         return repository.findById(id).orElse(null);
