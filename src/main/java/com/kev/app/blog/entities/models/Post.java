@@ -1,5 +1,7 @@
 package com.kev.app.blog.entities.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,7 +16,9 @@ public class Post {
     private Date postDate;
     @Column(name = "image_path")
     private String imagePath;
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("posts")
     private User user;
 
     public User getUser() {
@@ -55,5 +59,16 @@ public class Post {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", postDate=" + postDate +
+                ", imagePath='" + imagePath + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

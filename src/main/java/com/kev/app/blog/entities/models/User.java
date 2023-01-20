@@ -1,10 +1,13 @@
 package com.kev.app.blog.entities.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer","referenceList"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +17,8 @@ public class User {
     private String password;
     @Column(name = "image_path")
     private String imagePath;
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<Post> posts;
 
     public List<Post> getPosts() {
@@ -63,5 +67,16 @@ public class User {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
     }
 }
