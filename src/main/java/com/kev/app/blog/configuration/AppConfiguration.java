@@ -56,7 +56,7 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .cors()
-                .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+                .configurationSource(configurationSource());
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
