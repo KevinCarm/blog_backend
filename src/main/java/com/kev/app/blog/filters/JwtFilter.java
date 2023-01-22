@@ -29,20 +29,24 @@ public class JwtFilter extends OncePerRequestFilter {
         String email, jwt;
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            email = jwtUtil.extractEmail(jwt);
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                if (jwtUtil.validateToken(jwt, userDetails)) {
-                    UsernamePasswordAuthenticationToken token =
-                            new UsernamePasswordAuthenticationToken(
-                                    userDetails,
-                                    null,
-                                    userDetails.getAuthorities());
-                    token.setDetails(
-                            new WebAuthenticationDetailsSource().buildDetails(request)
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(token);
+            try {
+                email = jwtUtil.extractEmail(jwt);
+                if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                    if (jwtUtil.validateToken(jwt, userDetails)) {
+                        UsernamePasswordAuthenticationToken token =
+                                new UsernamePasswordAuthenticationToken(
+                                        userDetails,
+                                        null,
+                                        userDetails.getAuthorities());
+                        token.setDetails(
+                                new WebAuthenticationDetailsSource().buildDetails(request)
+                        );
+                        SecurityContextHolder.getContext().setAuthentication(token);
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         filterChain.doFilter(request, response);
