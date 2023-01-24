@@ -49,6 +49,8 @@ public class AppConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/file/{file}")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/post")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

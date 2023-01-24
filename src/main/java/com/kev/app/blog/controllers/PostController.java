@@ -2,12 +2,17 @@ package com.kev.app.blog.controllers;
 
 import com.kev.app.blog.entities.models.Post;
 import com.kev.app.blog.entities.models.User;
+import com.kev.app.blog.entities.repositories.IPostRepository;
 import com.kev.app.blog.entities.services.IPostService;
 import com.kev.app.blog.entities.services.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,7 +42,21 @@ public class PostController {
     private IPostService service;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IPostRepository repository;
     private final String UPLOADS_PATH = "src/main/resources/uploads";
+
+
+    @GetMapping("/post")
+    public ResponseEntity<?> getPosts(@RequestParam Long page) {
+        Pageable pageable = PageRequest
+                .of(
+                        page.intValue(),
+                        2,
+                        Sort.by("id").descending());
+        Page<Post> postPage = repository.findAll(pageable);
+        return ResponseEntity.ok(postPage.getContent());
+    }
 
     @PostMapping(value = "/post", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> save(@RequestParam MultipartFile file, @RequestParam String content) {
