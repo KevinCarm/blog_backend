@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class IPostServiceImpl implements IPostService{
+public class IPostServiceImpl implements IPostService {
     @Autowired
     private IPostRepository repository;
 
@@ -25,5 +26,19 @@ public class IPostServiceImpl implements IPostService{
     @Override
     public Post save(Post post) {
         return repository.save(post);
+    }
+
+    @Override
+    public void updateNumberOfFavorites(Long id, Boolean isToIncrease) {
+        Optional<Post> existingPost = repository.findById(id);
+        if (existingPost.isPresent()) {
+            Post posts = existingPost.get();
+            if (isToIncrease) {
+                posts.setNumberFavorites(posts.getNumberFavorites() + 1);
+            } else {
+                posts.setNumberFavorites(posts.getNumberFavorites() - 1);
+            }
+            repository.save(posts);
+        }
     }
 }

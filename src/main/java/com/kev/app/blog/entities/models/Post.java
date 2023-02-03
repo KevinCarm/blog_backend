@@ -21,6 +21,17 @@ public class Post {
     @JsonIgnoreProperties("posts")
     private User user;
 
+    @Column(name = "number_favorites")
+    private Integer numberFavorites;
+
+    public Integer getNumberFavorites() {
+        return numberFavorites;
+    }
+
+    public void setNumberFavorites(Integer numberFavorites) {
+        this.numberFavorites = numberFavorites;
+    }
+
     public User getUser() {
         return user;
     }

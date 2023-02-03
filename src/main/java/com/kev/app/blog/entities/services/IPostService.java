@@ -10,4 +10,5 @@ public interface IPostService {
     //TODO: get comments
     List<Post> getPosts();
     Post save(Post post);
+    void updateNumberOfFavorites(Long id, Boolean isToIncrease);
 }

@@ -49,8 +49,7 @@ public class PostController {
 
     @GetMapping("/post")
     public ResponseEntity<?> getPosts(@RequestParam Long page) {
-        Pageable pageable = PageRequest
-                .of(
+        Pageable pageable = PageRequest.of(
                         page.intValue(),
                         2,
                         Sort.by("id").descending());
@@ -62,6 +61,7 @@ public class PostController {
     public ResponseEntity<?> save(@RequestParam MultipartFile file, @RequestParam String content) {
         Post post = new Post();
         post.setContent(content);
+        post.setNumberFavorites(0);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -138,5 +138,13 @@ public class PostController {
             e.printStackTrace();
         }
         return ResponseEntity.ok("File");
+    }
+
+    @PutMapping("/favorites")
+    public ResponseEntity<?> updateNumberOfFavorites(@RequestBody Map<String, Object> body) {
+        Long id = Long.parseLong(body.get("id").toString());
+        Boolean isToIncrease = Boolean.parseBoolean(body.get("isToIncrease").toString());
+        service.updateNumberOfFavorites(id, isToIncrease);
+        return ResponseEntity.ok("Updated");
     }
 }
