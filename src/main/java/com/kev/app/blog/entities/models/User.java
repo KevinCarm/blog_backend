@@ -17,10 +17,17 @@ public class User {
     private String password;
     @Column(name = "image_path")
     private String imagePath;
+    private String description;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnoreProperties("user")
     private List<Post> posts;
 
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public List<Post> getPosts() {
         return posts;
     }

@@ -55,6 +55,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setDescription("");
         User savedUser = service.save(user);
         User response = new User();
         response.setEmail(savedUser.getEmail());
