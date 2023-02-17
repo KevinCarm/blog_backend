@@ -3,6 +3,7 @@ package com.kev.app.blog.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class JWTUtil {
-    private final String SECRET_KEY = "0zb5Yz2ddtFlZzE2lnqHdzJetadNVlW4OK5ZhBFdYRzRdEqH";
+    @Value("${secret.jwt.key}")
+    private String SECRET_KEY;
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
