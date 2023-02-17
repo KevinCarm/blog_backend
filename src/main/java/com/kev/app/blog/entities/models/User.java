@@ -22,6 +22,17 @@ public class User {
     @JsonIgnoreProperties("user")
     private List<Post> posts;
 
+    public User() {
+
+    }
+
+    public User(String username, String email, String password, String imagePath) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.imagePath = imagePath;
+    }
+
     public String getDescription() {
         return description;
     }
